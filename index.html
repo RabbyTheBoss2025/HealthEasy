@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <title>Easy Health App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #f0fdf4, #eff6ff);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      background: white;
+      padding: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 0;
+    }
+    nav li {
+      cursor: pointer;
+    }
+    .body-container {
+      margin-top: 20px;
+    }
+    svg {
+      width: 200px;
+      height: 500px;
+    }
+    .clickable:hover {
+      opacity: 0.7;
+    }
+    footer {
+      background: #111;
+      color: white;
+      padding: 20px;
+      margin-top: 40px;
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .popup.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>Easy Health</h2>
+    <nav>
+      <ul>
+        <li>Who am I</li>
+        <li>Services</li>
+        <li>Our Motto</li>
+        <li>Health Tips</li>
+        <li onclick="showTutorial()">Quick Tutorial</li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Welcome to Easy Health App</h1>
+    <p>App er baboher somporke jante <b>Quick Tutorial</b> Button e click korun</p>
+
+    <div class="body-container">
+      <svg viewBox="0 0 200 500">
+        <!-- Head -->
+        <circle cx="100" cy="40" r="25" fill="#fde68a" stroke="black" class="clickable" onclick="openPopup('Head')"/>
+        <!-- Chest -->
+        <rect x="75" y="70" width="50" height="120" fill="#a7f3d0" stroke="black" class="clickable" onclick="openPopup('Chest')"/>
+        <!-- Stomach -->
+        <rect x="75" y="190" width="50" height="80" fill="#93c5fd" stroke="black" class="clickable" onclick="openPopup('Stomach')"/>
+        <!-- Left Leg -->
+        <rect x="75" y="270" width="20" height="120" fill="#d8b4fe" stroke="black" class="clickable" onclick="openPopup('Left Leg')"/>
+        <!-- Right Leg -->
+        <rect x="105" y="270" width="20" height="120" fill="#fca5a5" stroke="black" class="clickable" onclick="openPopup('Right Leg')"/>
+      </svg>
+    </div>
+  </main>
+
+  <div id="popup" class="popup">
+    <h3 id="popup-title"></h3>
+    <ul id="popup-content"></ul>
+    <button onclick="closePopup()">Close</button>
+  </div>
+
+  <footer>
+    <p>Contact Us: easyhealth@example.com</p>
+    <p>© 2025 Easy Health. All Rights Reserved.</p>
+  </footer>
+
+  <script>
+    // Greeting voice on entry
+    window.onload = function() {
+      let msg = new SpeechSynthesisUtterance(
+        \"Health Easy App e Apnake Sagotom. Onugroho kore Apnar Somossar jaigai sobite click korun othoba Quick tutorial button press korun\"
+      );
+      msg.lang = \"bn-BD\";
+      window.speechSynthesis.speak(msg);
+    };
+
+    const symptoms = {
+      Head: [\"Headache\", \"Dizziness\", \"Blurred Vision\"],
+      Chest: [\"Chest Pain\", \"Cough\", \"Shortness of Breath\"],
+      Stomach: [\"Stomach Ache\", \"Nausea\", \"Indigestion\"],
+      \"Left Leg\": [\"Pain\", \"Swelling\", \"Numbness\"],
+      \"Right Leg\": [\"Pain\", \"Swelling\", \"Numbness\"]
+    };
+
+    function openPopup(part) {
+      document.getElementById(\"popup\").classList.add(\"active\");
+      document.getElementById(\"popup-title\").innerText = part + \" Symptoms\";
+      let list = document.getElementById(\"popup-content\");
+      list.innerHTML = \"\";
+      symptoms[part].forEach(symptom => {
+        let li = document.createElement(\"li\");
+        li.innerText = symptom;
+        list.appendChild(li);
+      });
+    }
+
+    function closePopup() {
+      document.getElementById(\"popup\").classList.remove(\"active\");
+    }
+
+    function showTutorial() {
+      alert(\"Quick Tutorial: Click on any body part to see symptoms.\");
+    }
+  </script>
+</body>
+</html>
